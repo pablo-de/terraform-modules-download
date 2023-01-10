@@ -6,8 +6,8 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 NOW=$(date +"%d-%m-%Y - %H:%M")
 
-MODULES_DIR="$DIR/github"
-MODULES_GITLAB="$DIR/gitlab"
+MODULES_DIR="$DIR/source"
+MODULES_GITLAB="$DIR/target"
 
 #Array with the modules.
 declare -a TF_MODULES=(
@@ -78,23 +78,6 @@ function tf_download_dir {
 
         #Print changes with date in format in log file.
         echo "$NOW | New module $1 = $tag" >>"$MODULES_GITLAB"/changes.log
-
-        # cd "$MODULES_GITLAB" || exit
-
-        # #Check if git is initialized.
-        # if [ ! -d "$MODULES_GITLAB"/$1/.git ]; then
-        #     git init
-        # fi
-
-        # #check if remote origin already exists.
-        # if [ -z "$(git remote -v | grep origin)" ]; then
-        #     git remote add origin
-        # fi
-
-        # git add "$MODULES_GITLAB"/$1
-        # git add "$MODULES_GITLAB"/changes.log
-        # git commit -m "Add module $1 = $tag"
-        # git push origin main
 
         cd "$MODULES_DIR" || exit
 
