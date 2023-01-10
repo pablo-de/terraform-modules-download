@@ -7,7 +7,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 NOW=$(date +"%d-%m-%Y - %H:%M")
 
 MODULES_DIR="$DIR/source"
-MODULES_GITLAB="$DIR/target"
+MODULES_TARGET="$DIR/target"
 
 #Array with the modules.
 declare -a TF_MODULES=(
@@ -57,27 +57,27 @@ function tf_download_dir {
         echo "Version: $tag" >TAG.md
 
         # Check if the directory gitlab exists.
-        if [ ! -d "$MODULES_GITLAB/$1" ]; then
-            mkdir -p "$MODULES_GITLAB/$1"
+        if [ ! -d "$MODULES_TARGET/$1" ]; then
+            mkdir -p "$MODULES_TARGET/$1"
         fi
 
         # Copy .tf and tag.md files to gitlab directory.
-        cp -r "$MODULES_DIR"/"$1"/*.tf "$MODULES_GITLAB"/"$1"
-        cp -r "$MODULES_DIR"/"$1"/TAG.md "$MODULES_GITLAB"/"$1"
+        cp -r "$MODULES_DIR"/"$1"/*.tf "$MODULES_TARGET"/"$1"
+        cp -r "$MODULES_DIR"/"$1"/TAG.md "$MODULES_TARGET"/"$1"
 
         #Check if folder modules and templates exist.
         if [ -d "$MODULES_DIR"/"$1"/modules ]; then
-            cp -r "$MODULES_DIR"/"$1"/modules "$MODULES_GITLAB"/"$1"
+            cp -r "$MODULES_DIR"/"$1"/modules "$MODULES_TARGET"/"$1"
         fi
         if [ -d "$MODULES_DIR"/"$1"/templates ]; then
-            cp -r "$MODULES_DIR"/"$1"/templates "$MODULES_GITLAB"/"$1"
+            cp -r "$MODULES_DIR"/"$1"/templates "$MODULES_TARGET"/"$1"
         fi
         if [ -d "$MODULES_DIR"/"$1"/wrappers ]; then
-            cp -r "$MODULES_DIR"/"$1"/wrappers "$MODULES_GITLAB"/"$1"
+            cp -r "$MODULES_DIR"/"$1"/wrappers "$MODULES_TARGET"/"$1"
         fi
 
         #Print changes with date in format in log file.
-        echo "$NOW | New module $1 = $tag" >>"$MODULES_GITLAB"/changes.log
+        echo "$NOW | New module $1 = $tag" >>"$MODULES_TARGET"/changes.log
 
         cd "$MODULES_DIR" || exit
 
